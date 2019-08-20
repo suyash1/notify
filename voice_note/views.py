@@ -2,8 +2,10 @@
 @author: Suyash
 This file contains all the view functions linked to urls
 """
+import json
+
 from flask_restful import Resource, Api, reqparse
-from flask import request, jsonify
+from flask import request
 from voice_note import app_trigger
 from voice_note.producer.push_to_topic import Producer
 
@@ -35,14 +37,17 @@ class TopicProducer(Resource):
     """
 
     def post(self):
-        args = parser.parse_args()
+        args = request.get_json()
+        print(args)
         file_path = args.get('file_path')
         pilot_id = args.get('pilot_id')
         producer = Producer()
-        producer.connect(args.get('exchange'))
-        producer.publish(topic=args.get('topic'), message=jsonify({'pilot_id': pilot_id,
-                                                                   'audio_file': file_path}))
-        return 200
+        producer.connect(exchange=args.get('exchange'))
+        print(file_path, pilot_id, args.get('exchange'), args.get('topic'))
+        msg = producer.publish(topic=args.get('topic'), message=json.dumps({'pilot_id': pilot_id,
+                                                                            'audio_file': file_path}))
+        producer.close()
+        return json.dumps(msg), 200
 
 
 # url handlers end here
