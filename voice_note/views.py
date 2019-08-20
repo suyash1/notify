@@ -38,12 +38,10 @@ class TopicProducer(Resource):
 
     def post(self):
         args = request.get_json()
-        print(args)
         file_path = args.get('file_path')
         pilot_id = args.get('pilot_id')
         producer = Producer()
         producer.connect(exchange=args.get('exchange'))
-        print(file_path, pilot_id, args.get('exchange'), args.get('topic'))
         msg = producer.publish(topic=args.get('topic'), message=json.dumps({'pilot_id': pilot_id,
                                                                             'audio_file': file_path}))
         producer.close()
