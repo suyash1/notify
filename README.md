@@ -35,14 +35,14 @@ The notification service is triggered next which:
 * This demo assumes RabbitMQ is installed on local system and running on 5672.
 If not, please refer to [installation on ubuntu](https://tecadmin.net/install-rabbitmq-server-on-ubuntu/) or 
 [installation on mac](https://www.rabbitmq.com/install-homebrew.html)
-* Login to RabbitMQ management console `http://localhost:15672` and create an `Exchange` with subscription queue and routing key.
+* Login to RabbitMQ management console `http://localhost:15672` and create an `Exchange` named `test` of type `topic` and make it durable. Then create a queue in management console, name it anything you like. Now go to the exchange tab and select `test` exchange, and add binding to the exchange by entering queue name which you have created earlier and `test.#` as routing key.
 Please refer to [this tutorial](https://www.youtube.com/watch?v=eic-CUNdLLA)
 * Create a python virtual environment using `python 3` and activate it
 * Clone the project
 * Install the requirements `pip install -r requirements.txt`
 * Run the flask server as `python runserver.py`
 * Now, open two separate terminals / tabs and activate virtual env in both.
-In one tab, go to `../notify/voice_note/consumer/` and run the consumer process by `python consumer.py`
+In one tab, go to `../notify/voice_note/consumer/` and run the consumer process by `python consumer.py [exchange_name] [queue_name]` which, in this case, will look like `python consumer.py test [your_queue_name]` 
 In the other tab, go to `../notify/voice_note/` and run the file `python sound_rec.py`.
 
    `sound_rec.py` simulates the voice recording from device and once the recording is done, it stores file locally in same directory.
