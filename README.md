@@ -1,6 +1,6 @@
 ### Notify: event-based pub-sub microservice
 
-This python demo aims to demonstrate event-driven pub-sub architecture using rabbitmq.
+This python demo aims to demonstrate event-driven pub-sub architecture using RabbitMQ. 
 
 #### Architecture
 There are two proposed architecture which aims to leverage the existing push notification functionality.
@@ -42,9 +42,9 @@ Please refer to [this tutorial](https://www.youtube.com/watch?v=eic-CUNdLLA)
 * Install the requirements `pip install -r requirements.txt`
 * Run the flask server as `python runserver.py`
 * Now, open two separate terminals / tabs and activate virtual env in both.
-In one tab, go to `../notify/voice_note/consumer/` and run the consumer process by `python consumer.py [exchange_name] [queue_name]` which, in this case, will look like `python consumer.py test [your_queue_name]` 
+In one tab, go to `../notify/voice_note/consumer/` and run the consumer process by `python consumer.py [exchange_name] [queue_name]` which, in this case, will look like `python consumer.py test [your_queue_name]`.
 In the other tab, go to `../notify/voice_note/` and run the file `python sound_rec.py`.
 
    `sound_rec.py` simulates the voice recording from device and once the recording is done, it stores file locally in same directory.
    In this demo, only the message passing to consumer is demonstrated.
-* After recording sound, `sound_rec.py` triggers notify API to publish the message to topic in rabbitmq. The message consists of random pilot_id and file_path (file name in this instance)
+* After recording sound, `sound_rec.py` triggers notify API to publish the message to topic in RabbitMQ. The message consists of random pilot_id and file_path (file name in this instance)
